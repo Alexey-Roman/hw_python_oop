@@ -19,7 +19,7 @@ class InfoMessage:
 
 class Training:
     """Базовый класс тренировки."""
-    LEN_STEP = 0.65  # Расстояние, которое спортсмен преодолевает за один шаг или гребок.
+    LEN_STEP = 0.65  # Расстояние, которое спортсмен
     M_IN_KM = 1000  # Константа для перевода значений из метров в километры.
     MIN_IN_H = 60  # Перевод из часов в минуты
 
@@ -110,7 +110,7 @@ class Swimming(Training):
                  count_pool: float):
         super().__init__(action, duration, weight)
         self.lenght_pool = length_pool  # Длина бассейна.
-        self.count_pool = count_pool  # Сколько раз пользователь переплыл бассейн.
+        self.count_pool = count_pool  # Сколько раз переплыл бассейн.
 
     def get_mean_speed(self) -> float:
         return (self.lenght_pool
