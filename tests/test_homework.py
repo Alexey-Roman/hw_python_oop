@@ -228,8 +228,8 @@ def test_Swimming():
     )
     for attr, value in {
             'LEN_STEP': 1.38,
-            'CALORIES_MEAN_SPEED_SHIFT': 1.1,
-            'CALORIES_WEIGHT_MULTIPLIER': 2,
+            'SPEED_SHIFT': 1.1,
+            'WEIGHT_MULTIPLIER': 2,
     }.items():
         assert hasattr(homework.Swimming, attr), (
             f'У класса `Swimming` должен быть атрибут `{attr}`'
@@ -293,8 +293,8 @@ def test_SportsWalking():
         'Класс `SportsWalking` должен наследоваться от класса `Training`.'
     )
     for attr, value in {
-            'CALORIES_WEIGHT_MULTIPLIER': 0.035,
-            'CALORIES_SPEED_HEIGHT_MULTIPLIER': 0.029,
+            'WEIGHT_MULTIPLIER': 0.035,
+            'HEIGHT_MULTIPLIER': 0.029,
             'KMH_IN_MSEC': 0.278,
             'CM_IN_M': 100
     }.items():
@@ -338,7 +338,7 @@ def test_Running():
     assert issubclass(homework.Running, homework.Training), (
         'Класс `Running` должен наследоваться от класса `Training`.'
     )
-    for attr, value in {'CALORIES_MEAN_SPEED_MULTIPLIER': 18, 'CALORIES_MEAN_SPEED_SHIFT': 1.79}.items():
+    for attr, value in {'SPEED_MULTIPLIER': 18, 'SPEED_SHIFT': 20}.items():
         assert hasattr(homework.Running, attr), (
             f'У класса `Running` должен быть атрибут `{attr}`'
         )
@@ -349,9 +349,9 @@ def test_Running():
 
 
 @pytest.mark.parametrize('input_data, expected', [
-    ([9000, 1, 75], 465.79499999999996),
-    ([420, 4, 20], -2.6951999999999994),
-    ([1206, 12, 6], -2.653128000000001),
+    ([9000, 1, 75], 383.85),
+    ([420, 4, 20], -90.1032),
+    ([1206, 12, 6], -81.32032799999999),
 ])
 def test_Running_get_spent_calories(input_data, expected):
     running = homework.Running(*input_data)
@@ -390,7 +390,7 @@ def test_main():
         'Длительность: 12.000 ч.; '
         'Дистанция: 0.784 км; '
         'Ср. скорость: 0.065 км/ч; '
-        'Потрачено ккал: -2.653.'
+        'Потрачено ккал: -81.320.'
     ]),
     (['WLK', [9000, 1, 75, 180]], [
         'Тип тренировки: SportsWalking; '
