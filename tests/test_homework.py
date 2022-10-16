@@ -228,8 +228,8 @@ def test_Swimming():
     )
     for attr, value in {
             'LEN_STEP': 1.38,
-            'SPEED_SHIFT': 1.1,
-            'WEIGHT_MULTIPLIER': 2,
+            'CALORIES_MEAN_SPEED_SHIFT': 1.1,
+            'CALORIES_WEIGHT_MULTIPLIER': 2,
     }.items():
         assert hasattr(homework.Swimming, attr), (
             f'У класса `Swimming` должен быть атрибут `{attr}`'
@@ -270,8 +270,8 @@ def test_Swimming_get_mean(input_data, expected):
 
 @pytest.mark.parametrize('input_data, expected', [
     ([720, 1, 80, 25, 40], 336.0),
-    ([420, 4, 20, 42, 4], 45.68000000000001),
-    ([1206, 12, 6, 12, 6], 13.272000000000002),
+    ([420, 4, 20, 42, 4], 182.72000000000003),
+    ([1206, 12, 6, 12, 6], 159.264),
 ])
 def test_Swimming_get_spent_calories(input_data, expected):
     swimming = homework.Swimming(*input_data)
@@ -293,8 +293,8 @@ def test_SportsWalking():
         'Класс `SportsWalking` должен наследоваться от класса `Training`.'
     )
     for attr, value in {
-            'WEIGHT_MULTIPLIER': 0.035,
-            'HEIGHT_MULTIPLIER': 0.029,
+            'CALORIES_WEIGHT_MULTIPLIER': 0.035,
+            'CALORIES_SPEED_HEIGHT_MULTIPLIER': 0.029,
             'KMH_IN_MSEC': 0.278,
             'CM_IN_M': 100
     }.items():
@@ -316,9 +316,9 @@ def test_SportsWalking():
 
 
 @pytest.mark.parametrize('input_data, expected', [
-    ([9000, 1, 75, 180], 157.50000000000003),
-    ([420, 4, 20, 42], 168.00000000000003),
-    ([1206, 12, 6, 12], 151.20000000000002),
+    ([9000, 1, 75, 180], 349.2517475250001),
+    ([420, 4, 20, 42], 168.11931219846002),
+    ([1206, 12, 6, 12], 151.54430943785593),
 ])
 def test_SportsWalking_get_spent_calories(input_data, expected):
     sports_walking = homework.SportsWalking(*input_data)
@@ -338,7 +338,7 @@ def test_Running():
     assert issubclass(homework.Running, homework.Training), (
         'Класс `Running` должен наследоваться от класса `Training`.'
     )
-    for attr, value in {'SPEED_MULTIPLIER': 18, 'SPEED_SHIFT': 20}.items():
+    for attr, value in {'CALORIES_MEAN_SPEED_MULTIPLIER': 18, 'CALORIES_MEAN_SPEED_SHIFT': 1.79}.items():
         assert hasattr(homework.Running, attr), (
             f'У класса `Running` должен быть атрибут `{attr}`'
         )
@@ -349,9 +349,9 @@ def test_Running():
 
 
 @pytest.mark.parametrize('input_data, expected', [
-    ([9000, 1, 75], 383.85),
-    ([420, 4, 20], -90.1032),
-    ([1206, 12, 6], -81.32032799999999),
+    ([9000, 1, 75], 481.90500000000003),
+    ([420, 4, 20], 14.488800000000001),
+    ([1206, 12, 6], 12.812472),
 ])
 def test_Running_get_spent_calories(input_data, expected):
     running = homework.Running(*input_data)
@@ -390,28 +390,28 @@ def test_main():
         'Длительность: 12.000 ч.; '
         'Дистанция: 0.784 км; '
         'Ср. скорость: 0.065 км/ч; '
-        'Потрачено ккал: -81.320.'
+        'Потрачено ккал: 12.812.'
     ]),
     (['WLK', [9000, 1, 75, 180]], [
         'Тип тренировки: SportsWalking; '
         'Длительность: 1.000 ч.; '
         'Дистанция: 5.850 км; '
         'Ср. скорость: 5.850 км/ч; '
-        'Потрачено ккал: 157.500.'
+        'Потрачено ккал: 349.252.'
     ]),
     (['WLK', [9000, 1.5, 75, 180]], [
         'Тип тренировки: SportsWalking; '
         'Длительность: 1.500 ч.; '
         'Дистанция: 5.850 км; '
         'Ср. скорость: 3.900 км/ч; '
-        'Потрачено ккал: 236.250.'
+        'Потрачено ккал: 364.084.'
     ]),
     (['WLK', [3000.33, 2.512, 75.8, 180.1]], [
         'Тип тренировки: SportsWalking; '
         'Длительность: 2.512 ч.; '
         'Дистанция: 1.950 км; '
         'Ср. скорость: 0.776 км/ч; '
-        'Потрачено ккал: 399.860.'
+        'Потрачено ккал: 408.429.'
     ]),
 ])
 def test_main_output(input_data, expected):
