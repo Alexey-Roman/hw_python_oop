@@ -34,7 +34,6 @@ class Training:
     LEN_STEP: float = 0.65
     M_IN_KM: int = 1000
     MIN_IN_H: int = 60
-    ERROR: str = 'Определи get_spent_calories в {}.'
 
     def __init__(self,
                  action: int,
@@ -55,7 +54,8 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        raise NotImplementedError(self.ERROR.format(self.__class__.__name__))
+        raise NotImplementedError(
+            f'Определи get_spent_calories в {self.__class__.__name__}.')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -101,7 +101,7 @@ class SportsWalking(Training):
                  * self.weight
                  + ((self.get_mean_speed() * self.KMH_IN_MSEC)
                     ** self.EXPONENT
-                    / self.weight)
+                    / self.height * self.CM_IN_M)
                  * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
                  * self.weight)
                 * self.duration * self.MIN_IN_H)
