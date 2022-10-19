@@ -11,16 +11,15 @@ class InfoMessage:
     speed: float
     calories: float
 
-    MESSAGE = ('Тип тренировки: {}; '
-               'Длительность: {:.3f} ч.; '
-               'Дистанция: {:.3f} км; '
-               'Ср. скорость: {:.3f} км/ч; '
-               'Потрачено ккал: {:.3f}.'
+    MESSAGE = ('Тип тренировки: {training_type}; ' 
+               'Длительность: {duration:.3f} ч.; ' 
+               'Дистанция: {distance:.3f} км; ' 
+               'Ср. скорость: {speed:.3f} км/ч; ' 
+               'Потрачено ккал: {calories:.3f}.'
                )
 
     def get_message(self) -> str:
-        parameters = asdict(self)
-        return self.MESSAGE.format(*parameters.values())
+        return self.MESSAGE.format(**asdict(self))
 
 
 class Training:
@@ -43,13 +42,11 @@ class Training:
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        mean_speed = self.get_distance() / self.duration
-        return mean_speed
+        return self.get_distance() / self.duration
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         pass
-        # raise NotImplementedError
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -131,16 +128,16 @@ class Swimming(Training):
                 * self.duration)
 
 
+TRAINING_CLASSES: Dict[str, Type[Training]] = {
+    'SWM': Swimming,
+    'RUN': Running,
+    'WLK': SportsWalking,
+}
+TRAINING_NO: str = 'Тренировки по {} сегодня не будет.'
+
+
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    # Коментарий для ревьюера - не вовсем понимаю как я должен этот словарь
-    # уюрать из данной функции?
-    TRAINING_CLASSES: Dict[str, Type[Training]] = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking,
-    }
-    TRAINING_NO: str = 'Тренировки по {} сегодня не будет.'
     if workout_type in TRAINING_CLASSES:
         return TRAINING_CLASSES[workout_type](*data)
     raise ValueError(TRAINING_NO.format(workout_type))
