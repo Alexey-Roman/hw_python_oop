@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Type, Dict
 
 
@@ -11,22 +11,16 @@ class InfoMessage:
     speed: float
     calories: float
 
-    MESSAGE = ('Тип тренировки: {training_type}; '
-               'Длительность: {duration:.3f} ч.; '
-               'Дистанция: {distance:.3f} км; '
-               'Ср. скорость: {speed:.3f} км/ч; '
-               'Потрачено ккал: {calories:.3f}.'
+    MESSAGE = ('Тип тренировки: {}; '
+               'Длительность: {:.3f} ч.; '
+               'Дистанция: {:.3f} км; '
+               'Ср. скорость: {:.3f} км/ч; '
+               'Потрачено ккал: {:.3f}.'
                )
 
     def get_message(self) -> str:
-        asdict = {
-            'training_type': self.training_type,
-            'duration': self.duration,
-            'distance': self.distance,
-            'speed': self.speed,
-            'calories': self.calories,
-        }
-        return self.MESSAGE.format(**asdict)
+        parameters = asdict(self)
+        return self.MESSAGE.format(*parameters.values())
 
 
 class Training:
@@ -139,6 +133,8 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
+    #Коментарий для ревьюера - не вовсем понимаю как я должен этот словарь
+    #уюрать из данной функции?
     TRAINING_CLASSES: Dict[str, Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
@@ -147,8 +143,7 @@ def read_package(workout_type: str, data: list) -> Training:
     TRAINING_NO: str = 'Тренировки по {} сегодня не будет.'
     if workout_type in TRAINING_CLASSES:
         return TRAINING_CLASSES[workout_type](*data)
-    else:
-        raise ValueError(TRAINING_NO.format(workout_type))
+    raise ValueError(TRAINING_NO.format(workout_type))
 
 
 def main(training: Training) -> None:
