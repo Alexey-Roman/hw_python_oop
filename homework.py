@@ -133,8 +133,8 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    #Коментарий для ревьюера - не вовсем понимаю как я должен этот словарь
-    #уюрать из данной функции?
+    # Коментарий для ревьюера - не вовсем понимаю как я должен этот словарь
+    # уюрать из данной функции?
     TRAINING_CLASSES: Dict[str, Type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
